@@ -9,6 +9,7 @@ const async = require("hbs/lib/async");
 router.get("/", async (req, res) => {
   let posters = await Poster.collection().fetch({
     withRelated: ["category", "tags"],
+    // question - why category is singular and tags is plural ? because of model?
   });
 
   res.render("posters/index", {
