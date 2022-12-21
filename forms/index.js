@@ -1,5 +1,6 @@
 // import in caolan forms
 const forms = require("forms");
+const { trigger } = require("../bookshelf");
 // create some shortcuts
 const fields = forms.fields;
 const validators = forms.validators;
@@ -111,4 +112,59 @@ const createPosterForm = (categories, tags) => {
   });
 };
 
-module.exports = { createPosterForm, bootstrapField };
+const createRegistrationForm = () => {
+  return forms.create({
+    username: fields.string({
+      required: true,
+      errorAfterField: true,
+      cssClasses: {
+        label: ["form-label"],
+      },
+    }),
+    email: fields.string({
+      required: true,
+      errorAfterField: true,
+      cssClasses: {
+        label: ["form-label"],
+      },
+    }),
+    password: fields.password({
+      required: true,
+      errorAfterField: true,
+      cssClasses: {
+        label: ["form-label"],
+      },
+    }),
+    // important - why password got 2 field , when register - extra 1 more input box to confirm the password
+    confirm_password: fields.password({
+      required: true,
+      errorAfterField: true,
+      cssClasses: {
+        label: ["form-label"],
+      },
+      validators: [validators.matchField("password")],
+    }),
+  });
+};
+
+//create login form
+const createLoginForm = () => {
+  return forms.create({
+    email: fields.string({
+      required: true,
+      errorAfterField: true,
+      cssClasses: {
+        label: ["form-label"],
+      },
+    }),
+    password: fields.password({
+      required: true,
+      errorAfterField: true,
+      cssClasses: {
+        label: ["form-label"],
+      },
+    }),
+  });
+};
+
+module.exports = { createPosterForm, bootstrapField, createRegistrationForm , createLoginForm};
