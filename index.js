@@ -2,6 +2,7 @@ const express = require("express");
 const hbs = require("hbs");
 const wax = require("wax-on");
 require("dotenv").config();
+// cors must setup before sessions
 
 // create an instance of express app
 let app = express();
@@ -21,6 +22,17 @@ app.use(
     saveUninitialized: true,
   })
 );
+
+//setup flash
+app.use(flash());
+
+//register flash middleware
+app.use((req, res, next) => {
+  res.locals.success_messages = req.flash("success_messages");
+  res.locals.error_messages = req.flash("error_messages");
+  //most important
+  next();
+});
 
 // set the view engine
 app.set("view engine", "hbs");

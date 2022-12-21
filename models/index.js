@@ -1,5 +1,5 @@
 const bookshelf = require("../bookshelf");
-
+// depends on the relationship - if 1- 1  =singular , if 1 to many - plural
 const Poster = bookshelf.model("Poster", {
   tableName: "posters",
   category() {
