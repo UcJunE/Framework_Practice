@@ -35,6 +35,9 @@ router.get("/create", checkIfAuthenticated, async (req, res) => {
   const posterForm = createPosterForm(allCategories, allTags);
   res.render("posters/create", {
     form: posterForm.toHTML(bootstrapField),
+    cloudinaryName: process.env.CLOUDINARY_NAME,
+    cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+    cloudinaryPreset: process.env.CLOUDINARY_UPLOAD_PRESET,
   });
 });
 
@@ -119,7 +122,8 @@ router.get("/update/:poster_id", async (req, res) => {
   posterForm.fields.height.value = poster.get("height");
   posterForm.fields.width.value = poster.get("width");
   posterForm.fields.category_id.value = poster.get("category_id");
-
+  // 1 - set the image url in the poster form
+  posterForm.fields.image_url.value = poster.get("image_url");
   //fill in the multi- select for the tags
   let selectedTags = await poster.related("tags").pluck("id");
   posterForm.fields.tags.value = selectedTags;
@@ -128,6 +132,10 @@ router.get("/update/:poster_id", async (req, res) => {
   res.render("posters/update", {
     form: posterForm.toHTML(bootstrapField),
     poster: poster.toJSON(),
+    // 2 - send to the HBS file the cloudinary information
+    cloudinaryName: process.env.CLOUDINARY_NAME,
+    cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+    cloudinaryPreset: process.env.CLOUDINARY_UPLOAD_PRESET,
   });
 });
 

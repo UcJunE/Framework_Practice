@@ -43,6 +43,9 @@ const createPosterForm = (categories, tags) => {
         label: ["form-label"],
       },
     }),
+    image_url: fields.string({
+      widget: widgets.hidden(),
+    }),
     cost: fields.string({
       required: true,
       errorAfterField: true,
@@ -167,4 +170,9 @@ const createLoginForm = () => {
   });
 };
 
-module.exports = { createPosterForm, bootstrapField, createRegistrationForm , createLoginForm};
+module.exports = {
+  createPosterForm,
+  bootstrapField,
+  createRegistrationForm,
+  createLoginForm,
+};
